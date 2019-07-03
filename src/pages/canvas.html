@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一般画图的api</title>
+    <style type="text/css">
+        body {
+            text-align: center;
+        }
+
+        #myCanvas {
+            width: 600px;
+            height: 600px;
+            border: 1px solid black;
+            margin: auto;
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" width="600" height="600"></canvas>
+</body>
+<script type="text/javascript">
+    let myCanvas = document.getElementById('myCanvas');
+    let context = myCanvas.getContext('2d');
+    // 实心矩形
+    // context.fillStyle = 'pink'; // 填充css的颜色值
+    // context.fillRect(10, 10, 100, 100); // 实心矩形 按顺序参数：x,y是起始点坐标，width,height是矩形的宽高
+
+    // 空心矩形
+    context.strokeStyle = '#4169E1'; // 线框颜色
+    context.strokeRect(120, 10, 100, 100); // 空心矩形 按顺序参数：x,y是起始点坐标，width,height是矩形的宽高
+
+    //实心加边框
+    context.strokeStyle = '#ADD8E6'; // 线框颜色
+    context.rect(230, 10, 100, 100); // 空心矩形 按顺序参数：x,y是起始点坐标，width,height是矩形的宽高
+    context.fillStyle = "#FF00FF";
+    context.fill();
+    context.stroke();
+
+    // 圆形
+    context.beginPath();
+    context.fillStyle = "#00FFFF";
+    context.arc(60, 180, 50, 0, Math.PI * 2, true); //参数依次x,y圆中心坐标，r圆半径 起始角度 结束角度 是否是逆时针true
+    context.fill();
+
+    // 圆弧
+    context.beginPath(); // 需要重新制定起始点 如果画完前面的路径没有重新指定beginPath，那么画第其他路径的时候会将前面最近指定的beginPath后的全部路径重新绘制
+    context.strokeStyle = 'black'; // 线框颜色
+    context.arc(180, 180, 50, .3 * Math.PI, Math.PI, false);
+    // context.closePath(); // 闭合有底线
+    context.stroke();
+
+    // // 圆弧覆盖
+    // context.beginPath(); // 需要重新制定起始点 如果画完前面的路径没有重新指定beginPath，那么画第其他路径的时候会将前面最近指定的beginPath后的全部路径重新绘制
+    // context.fillStyle = '#00FF00'; // 线框颜色
+    // context.strokeStyle = '#7FFFAA'; // 线框颜色
+    // context.arc(60, 180, 50, .3 * Math.PI, Math.PI, false);
+    // context.closePath(); // 闭合有底线
+    // console.log(context.fillStyle)
+    // context.fill();
+
+    // 线段
+    context.moveTo(250, 260);
+    context.lineTo(300, 150);
+    context.stroke();
+
+    // 清除区域 clearRect() 方法清空给定矩形内的指定像素。
+
+
+    // 图像或视频绘制
+    context.beginPath();
+    let imgLink = new Image();
+    // imgLink.src = 'https://cdn.kaishuhezi.com/kstory/activity_flow/image/7ea5c9cf-21ca-4d32-824c-cd00c461fea1.png';
+    imgLink.src = 'https://cdn.kaishuhezi.com/kstory/activity_flow/image/25435e87-3910-40c0-8cd5-d214a4b36373.png'; // 平铺的背景图
+    imgLink.onload = function () {
+
+        // context.drawImage(imgLink); // 参数依次图像资源，x,y图像放置位置，width,height图像宽高
+        let pat = context.createPattern(imgLink, "repeat");
+        context.rect(10, 280, 300, 100);
+        context.fillStyle = pat;
+        console.log(context.fillStyle)
+        context.fill();
+        context.save();
+
+        context.clearRect(20, 280, 20, 20); // 参数依次x,y要清除的矩形左上角的x,y坐标，width，height清除的矩形的宽高
+        context.restore()
+
+    }
+
+    // 绘制文字
+    context.beginPath();
+    context.fillStyle='black';
+    context.font='100px Arial';
+    // 实心文字
+    context.fillText('白淑文', 20, 430); // 参数依次 text文本 x，y开始绘制文本的位置，maxWidth允许最大文本的宽度
+    // 描边文字
+    context.strokeStyle = 'black';
+    context.lineWidth= '1';
+    context.textAlign="center"; // 文本居中
+    context.strokeText("白淑文",300,480); // 参数依次 text文本 x，y开始绘制文本的位置，maxWidth允许最大文本的宽度
+
+    // 转换方法
+    context.fillRect(20,500,100,50);
+    context.save(); // 用来保存Canvas的状态。save之后，可以调用Canvas的平移、放缩、旋转、错切、裁剪等操作
+    context.translate(70,70); // 参数依次添加到水平坐标上的x,y值
+    context.rotate(5*Math.PI/180) // 旋转角度
+    context.fillRect(20,500,100,50);
+    context.restore(); // 用来恢复Canvas之前保存的状态。防止save后对Canvas执行的操作对后续的绘制有影响
+
+    // save和restore要配对使用
+
+</script>
+</html>

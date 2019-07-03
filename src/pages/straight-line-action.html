@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>直线运动</title>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="400" style="background:#000;"></canvas>
+<script type="text/javascript">
+    window.onload=function(){
+        let canvas=document.getElementById('canvas');
+        let context=canvas.getContext('2d');
+        context.fillStyle='red';
+        context.beginPath();
+        context.arc(1000,300,30,0,2*Math.PI,true);
+        context.closePath();
+        context.fill();
+        setInterval(function(){
+            run(context);
+        }, 100);
+    };
+    let speed=0;
+    let startPoint=1000;
+    function run(cxt){
+        if(startPoint < 0) {
+            startPoint=1000;
+        }
+        speed=-10;
+        cxt.clearRect(0,0,1000,400);
+        startPoint+=speed;
+        cxt.beginPath();
+        cxt.arc(startPoint,300,30,0,2*Math.PI,true);
+        cxt.closePath();
+        cxt.fill();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); //ios和android可点击元素的高亮颜色设置透明
+  cursor: pointer; //为所有dom添加手势，解决IOS下不能点击的对象上绑定点击事件失效的问题
+  box-sizing: border-box;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+ol,
+ul,
+menu {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+//table {
+//    border-collapse: collapse;
+//    border-spacing: 0;
+//}
+img {
+  -webkit-touch-callout: none;
+}
+// 清除webkit下表单元素的outline
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  color:#4a4a4a;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/*
+* @module 移除 chrome 自动补全时黄色背景
+*/
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+html,
+body {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+}

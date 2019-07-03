@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>直线运动</title>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="800" style="background:#000;"></canvas>
+<script type="text/javascript">
+
+    // 圆周运动
+    // window.onload=function(){
+    //     let canvas=document.getElementById('canvas');
+    //     let context=canvas.getContext('2d');
+    //     drawNotChange(context);
+    //     context.fillStyle='blue';
+    //     context.beginPath();
+    //     context.arc(500,550,30,0,2*Math.PI,true);
+    //     context.closePath();
+    //     context.fill();
+    //     setInterval(function(){
+    //         run(context);
+    //     }, 50);
+    // };
+    // let time=0;//定义运动的执行次数
+    // function run(cxt){
+    //     cxt.clearRect(0,0,1000,800);
+    //     drawNotChange(cxt);
+    //     cxt.save();//将当前以左上角坐标为(0,0)的上下文环境进行保存，这样是为了在接下来中要进行画布偏移后，可以进行还原当前的环境
+    //     cxt.translate(500,400);
+    //     cxt.rotate(time*8*Math.PI/180);//设定每次旋转的度数
+    //     cxt.fillStyle='blue';
+    //     cxt.beginPath();
+    //     cxt.arc(0,150,30,0,2*Math.PI,false);
+    //     cxt.closePath();
+    //     cxt.fill();
+    //     cxt.restore();//将当前为(500,400)的点还原为（0,0）,其实在save中就是将上下文环境保存到栈中，在restore下面对其进行还原
+    //     time+=1;
+    // }
+    //
+    // //绘制不变因素
+    // function drawNotChange(context){
+    //     context.beginPath();
+    //     context.strokeStyle='#fff';
+    //     context.arc(500,400,150,0,2*Math.PI,true);
+    //     context.closePath();
+    //     context.stroke();
+    // }
+
+
+    // 椭圆运动
+    let a = 200,
+        b = 100,
+        radius = 20;
+    time = 0;//循环的次数
+    window.onload = function () {
+        let canvas = document.getElementById('canvas');
+        let cxt = canvas.getContext('2d');
+        arcRoute(cxt, 400, 400, a, b, radius);
+        setInterval(function () {
+            arcRoute(cxt, 400, 400, a, b, radius);
+        }, 70);
+    };
+
+    //椭圆路线绘制
+    function route(context, x, y, a, b) {
+        let step = 1/30;
+        context.beginPath();
+        context.moveTo(x+a, y); //从椭圆的左端点开始绘制
+        for (let i = 0; i < 2 * Math.PI; i += step) {
+            context.lineTo(x + a * Math.cos(i), y + b * Math.sin(i));
+        }
+        context.strokeStyle = '#fff';
+        context.closePath();
+        context.stroke();
+    }
+
+    //椭圆上小球运动的实现
+    function arcRoute(context, x, y, a, b, r) {
+        context.clearRect(0, 0, 1000, 800);
+        route(context, x, y, a, b);
+        context.fillStyle = "red";
+        context.beginPath();
+        context.arc(x + a * Math.cos(time), y + b * Math.sin(time), r, 0, 2 * Math.PI, true);
+        context.closePath();
+        context.fill();
+        time += 0.1;
+    }
+
+
+</script>
+</body>
+</html>

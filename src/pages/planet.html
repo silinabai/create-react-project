@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>星球运动</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: url("../image/f17114004655b6e72591324ee48fe992.jpg") no-repeat;
+            background-size: 100% 110%;
+            /*background-color: rgb(20,16,27);*/
+        }
+    </style>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+
+    /**
+     * 画星球的对象
+     * @param x  // 圆心的横坐标
+     * @param y  // 圆心的纵坐标
+     * @param r  // 半径
+     * @param a  // 长轴
+     * @param b  // 短轴
+     * @param t  // 角度
+     * @param c  // 颜色
+     * @constructor
+     */
+    function StarObj(x, y, r, a, b, t, c) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.a = a;
+        this.b = b;
+        this.t = t;
+        this.c = c;
+    }
+
+    StarObj.prototype = {
+        constructor: StarObj,
+        drawStar: function () {
+            context.save();
+            context.fillStyle = this.c;
+            context.shadowBlur = 30;
+            context.shadowColor = this.c;
+            context.beginPath();
+            context.arc(this.x + this.a * Math.cos(this.t), this.y + this.b * Math.sin(this.t), this.r, 0, 2 * Math.PI, true);
+            context.closePath();
+            context.fill();
+            context.restore();
+        }
+    }
+    window.onload = function () {
+        let planetObj = {
+            account: 8, // 轨道和星球数量
+            distance: 20, // 轨道之间的距离
+            x: 850, // 轨道起点和星球中心横坐标
+            y: 420, // 轨道起点和星球中心纵坐标
+            a: 80, // 长轴
+            b: 6, // 短轴
+            time: 1, // 单位时间
+            colors: ['#FFFF00', '#DDA0DD', '#FAFAD2', '#FFFACD', '#FFDAB9', '#00FFFF', '#7FFFAA', '#FFF8DC', '#DAA520'], // 星球颜色集
+            initcanvas: function () {
+                let canvas = document.createElement('canvas');
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                context = canvas.getContext('2d');
+                document.body.appendChild(canvas);
+            },
+            /**
+             * 轨道方法
+             */
+            route: function () {
+                let [a, b, x, y] = [this.a, this.b, this.x, this.y];
+                for (let i = 1; i <= this.account; i++) {
+                    context.save();
+                    let step = 1 / 30;
+                    context.save();
+                    context.beginPath();
+                    context.moveTo(i * this.distance + x + a * i / 3, y); //从椭圆的左端点开始绘制
+                    context.strokeStyle = 'rgba(92,130,169,' + 0.5 + ')';
+                    context.shadowBlur = 5;
+                    context.shadowColor = "#6BFFFF";
+                    for (let j = 0; j < 2 * Math.PI; j += step) {
+                        context.lineTo(x + (i * this.distance + a * i / 3) * Math.cos(j), y + (i * this.distance + b * i / 3) * Math.sin(j));
+                    }
+                    context.closePath();
+                    context.stroke();
+                    context.restore();
+                }
+            },
+            /**
+             * 星球运动
+             */
+            drawActionRoute: function () {
+                context.clearRect(0, 0, width, height);
+                context.restore();
+                this.route();
+                let [a, b, x, y] = [this.a, this.b, this.x, this.y];
+                for (let i = 1; i <= this.account; i++) {
+                    let time = i + this.time * (12-i)/10;
+                    let color = this.colors[i];
+                    let planet = new StarObj(x, y, 7 , i * this.distance + a * i / 3, i * this.distance + b * i / 3, time, color);
+                    planet.drawStar();
+                }
+                this.time = this.time + 0.008;
+            },
+            /**
+             * 初始化
+             */
+            init: function () {
+                this.initcanvas();
+                setInterval(() => {
+                    this.drawActionRoute();
+                }, 70);
+            }
+        }
+        planetObj.init();
+    }
+</script>
+</html>
